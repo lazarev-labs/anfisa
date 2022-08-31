@@ -1,10 +1,9 @@
 branches:
   - main
   - master
-  - name: "*.x"
-    prerelease: true
-  - name: "*.x-jsonlogs"
-    prerelease: true
+  - name: "v.0.7.x"
+    channel: '0.7.x'
+    prerelease: false
 ci: true
 debug: false
 dryRun: false
@@ -15,11 +14,7 @@ preset: 'conventionalcommits'
 
 
 
-verifyConditions:
-  - '@semantic-release/changelog'
-  - '@semantic-release/git'
-  # - '@semantic-release/gitlab'
-  # - 'semantic-release-slack-bot'
+verifyConditions: []
 
 analyzeCommits:
   - path: '@semantic-release/commit-analyzer'
@@ -59,7 +54,6 @@ generateNotes:
     linkCompare: true
     linkReferences: true
     parserOpts:
-
       mergePattern: "^Merge branch '(.*)' into (.*)$"
       mergeCorrespondence: ['branch_src', 'branch_dst']
     presetConfig:
@@ -72,13 +66,13 @@ generateNotes:
           hidden: true
         - type: 'ci'
           section: '🛺 CI/CD'
-          hidden: false
+          hidden: true
         - type: 'docs'
           section: '📔 Docs'
           hidden: false
         - type: 'example'
           section: '📝 Examples'
-          hidden: false
+          hidden: true
         - type: 'feat'
           section: '🚀 Features'
           hidden: false
@@ -94,37 +88,10 @@ generateNotes:
           section: '🙅‍♂️ Reverts'
         - type: 'style'
           section: '💈 Style'
+          hidden: true
         - type: 'test'
           section: '🧪 Tests'
-          hidden: false
-
-prepare:
-  # - path: '@semantic-release/exec'
-  #   verifyReleaseCmd: "echo ${nextRelease.version} > VERSION.txt"
-  - path: '@semantic-release/changelog'
-  # - path: '@semantic-release/git'
-  #   message: 'chore(RELEASE): ${nextRelease.version}'
-  #   assets: ['CHANGELOG.md']
+          hidden: true
 
 publish:
   - path: '@semantic-release/github'
-
-success:
-  # - path: 'semantic-release-slack-bot'
-  #   notifyOnSuccess: true
-  #   markdownReleaseNotes: true
-  #   onSuccessTemplate:
-  #     channel: 'chanelname'
-  #     text: "A new version of $package_name with version `$npm_package_version` has been released"
-  #     attachments:
-  #       - color: '#00c100'
-  #         title: '$package_name'
-  #         title_link: '$repo_url'
-  #         text: '$release_notes'
-  #         footer: 'version: $npm_package_version'
-
-
-fail: false
-  # - path: 'semantic-release-slack-bot'
-  #   # publish a message about failure to a slack channel
-  #   notifyOnFail: true
